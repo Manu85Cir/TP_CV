@@ -2,7 +2,7 @@ pipeline {
       agent any
       stages{
         // Création image
-        stage('Création de  image docker') {
+        stage('Création de image docker build jenkins') {
             steps {
                 sh 'docker build -t cv_triaud .'
             }
