@@ -4,8 +4,8 @@ pipeline {
         // Création image
         stage('Etape 0 - Stop and delete cv_triaud_cont') {
             steps {
-                sh 'docker stop cv_triaud_cont'
-                sh 'docker rm cv_triaud_cont'
+                //sh 'docker stop cv_triaud_cont'
+                sh 'docker rm -f cv_triaud_cont || true'
             }
             post {
                 success {
