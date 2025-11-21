@@ -55,9 +55,9 @@ pipeline {
         stage('Etape 3 : Tag and push image to dockerhub de emmanueltriaud') {
                 steps {
                     echo "tag and push image ..."
-                    sh "docker tag cv_triaud emmanueltriaud/cv_triaud"
+                    sh "docker tag cv_triaud emmanueltriaud/cv_triaud:v2"
                     sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
-                    sh "docker push emmanueltriaud/cv_triaud"
+                    sh "docker push emmanueltriaud/cv_triaud:v2"
                     sh "docker logout"
                 }
                 post {
