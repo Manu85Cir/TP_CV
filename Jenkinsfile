@@ -5,7 +5,7 @@ pipeline {
         stage('Etape 0 - Stop and delete cv_triaud_cont') {
             steps {
                 //sh 'docker stop cv_triaud_cont'
-                sh 'docker rm -f cv_triaud_cont || true'
+                sh 'docker rm -f cv_triaud_cont'
             }
             post {
                 success {
