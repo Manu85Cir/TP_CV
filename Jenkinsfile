@@ -5,6 +5,7 @@ pipeline {
         // Configuration Email
         EMAIL_RECIPIENTS = 'etriaud@cirilgroup.com'
         EMAIL_FROM = '"Jenkins CI/CD" <jenkins-ci@smart-it-partner.com>'
+        DOCKERHUB_CREDENTIALS = credentials('emmanueltriaud')
     }
     stages{
         // Création image
@@ -23,7 +24,7 @@ pipeline {
             }
         }
         // Création image
-        stage('Création de image docker build jenkins webhook') {
+        stage('Etape 1 : Création de image docker build jenkins webhook') {
             steps {
                 sh 'docker build -t cv_triaud .'
             }
@@ -38,7 +39,7 @@ pipeline {
         }
 
           // Création image
-        stage('Lancer un container de cette image') {
+        stage('Etape 2 : Lancer un container de cette image') {
             steps {
                 sh 'docker run -d -p 8184:80 --name cv_triaud_cont cv_triaud'
             }
@@ -51,6 +52,23 @@ pipeline {
                 }
             }
         }
+        stage('Etape 3 : Tag and push image to dockerhub de emmanueltriaud') {
+                steps {
+                    echo "tag and push image ..."
+                    sh "docker tag cv_triaud emmanueltriaud/cv_triaud"
+                    sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
+                    sh "docker push emmanueltriaud/cv_triaud"
+                    sh "docker logout"
+                }
+                post {
+                    success {
+                        echo "====++++success++++===="
+                    }
+                    failure {
+                        echo "====++++failed++++===="
+                    }
+                }
+          }
      }
      post {
         always {
